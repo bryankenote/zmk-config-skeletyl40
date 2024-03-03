@@ -1,85 +1,50 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
 
-// The default keymap is roughly on Miryoku layout
-// (https://github.com/manna-harbour/miryoku).
-// Customize on your own on the config folder.
-
-#define BASE    0
+#define QWERTY  0
 #define NAV     1
-#define SYM     2
-#define NUM     3
-#define FUN     4
-#define MED     5
+#define NUM     2
+#define DHM     3
 
 / {
-    behaviors {
-        hm: homerow_mods {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HOMEROW_MODS";
-            #binding-cells = <2>;
-            tapping-term-ms = <150>;
-            quick-tap-ms = <0>;
-            flavor = "hold-preferred";
-            bindings = <&kp>, <&kp>;
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
+        qwerty {
             bindings = <
     &kp Q       &kp W       &kp E       &kp R       &kp T                                   &kp Y           &kp U       &kp I       &kp O           &kp P
-    &hm LGUI A  &hm LALT S  &hm LCTRL D &hm LSHFT F &kp G                                   &kp H           &hm LSHFT J &hm LCTRL K &hm LALT L      &hm LGUI SQT
-    &kp Z       &hm RALT X  &kp C       &kp V       &kp B                                   &kp N           &kp M       &kp COMMA   &hm RALT DOT    &kp FSLH
-                                        &lt MED ESC &lt NAV SPACE   &kp TAB     &lt SYM RET &lt NUM BSPC    &lt FUN DEL
+    &kp A       &kp S       &kp D       &kp F       &kp G                                   &kp H           &kp J       &kp K       &kp L           &kp SQT
+    &kp Z       &kp X       &kp C       &kp V       &kp B                                   &kp N           &kp M       &kp COMMA   &kp DOT         &kp FSLH
+                &kp TAB     &kp ESC     &kp LCTRL   &kp LSHFT   &mo NAV          &mo NUM    &kp SPACE       &kp LALT    &kp BSPC    &kp ENTER
             >;
         };
 
         nav_layer {
             bindings = <
-    &none       &none       &none       &none       &none                           &kp LC(Y    &kp LC(V)   &kp LC(C)   &kp LC(X)   &kp LC(Z)
-    &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   &none                           &kp CAPS    &kp LEFT    &kp DOWN    &kp UP      &kp RIGHT
-    &none       &none       &none       &none       &none                           &kp INS     &kp HOME    &kp PG_DN   &kp PG_UP   &kp END
-                                        &none       &trans  &none       &kp RET     &kp BSPC    &kp DEL     
-            >;
-        };
-
-        sym_layer {
-            bindings = <
-    &kp LBRC    &kp AMPS    &kp STAR    &kp LPAR   &kp RBRC                     &none       &none       &none       &none       &none
-    &kp COLON   &kp DLLR    &kp PRCNT   &kp CARET  &kp PLUS                     &none       &kp RSHFT   &kp RCTRL   &kp RALT    &kp RGUI
-    &kp TILDE   &kp EXCL    &kp AT      &kp HASH   &kp PIPE                     &none       &none       &none       &none       &none
-                                        &kp LPAR   &kp RPAR &kp UNDER   &trans  &none       &none
+    &none       &kp MINUS   &kp PLUS    &kp LBRC    &kp RBRC                                &kp HOME        &kp PG_DN   &kp PG_UP   &kp END     &kp INS
+    &kp TILDE   &kp UNDER   &kp EQUAL   &kp LPAR    &kp RPAR                                &kp LEFT        &kp DOWN    &kp UP      &kp RIGHT   &kp SEMI
+    &kp GRAVE   &kp PIPE    &kp NUBS    &kp LBKT    &kp RBKT                                &none           &kp LEFT    &kp DOWN    &kp RIGHT   &kp COLON
+                &kp TAB     &kp LCTRL   &kp LCTRL   &kp LSHFT   &none           &none       &kp SPACE       &kp LALT    &kp BSPC    &kp ENTER
             >;
         };
 
         num_layer {
             bindings = <
-    &kp LBKT    &kp N7  &kp N8  &kp N9  &kp RBKT                        &none   &none       &none       &none       &none
-    &kp SEMI    &kp N4  &kp N5  &kp N6  &kp EQUAL                       &none   &kp RSHFT   &kp RCTRL   &kp RALT    &kp RGUI
-    &kp GRAVE   &kp N1  &kp N2  &kp N3  &kp BSLH                        &none   &none       &none       &none       &none
-                                &kp DOT &kp N0      &kp MINUS   &none   &trans  &none
+    &kp F1      &kp F2      &kp F3      &kp F4  &kp F5                                      &kp F6          &kp F7      &kp F8      &kp F9      &kp F10
+    &kp N1      &kp N2      &kp N3      &kp N4  &kp N5                                      &kp N6          &kp N7      &kp N8      &kp N9      &kp N0
+    &none       &none       &none       &none   &kp LALT                                    &kp RALT        &none       &none       &none       &none
+                &kp TAB     &kp ESC     &kp LCTRL   &kp LSHFT   &none           &none       &kp SPACE       &kp LALT    &kp F11     &kp F12
             >;
         };
 
-        fun_layer {
+        dhm_layer {
             bindings = <
-    &kp F12 &kp F7  &kp F8  &kp F9      &kp PSCRN                           &none   &none       &none       &none       &none
-    &kp F11 &kp F4  &kp F5  &kp F6      &kp SLCK                            &none   &kp RSHFT   &kp RCTRL   &kp RALT    &kp RGUI
-    &kp F10 &kp F1  &kp F2  &kp F3      &kp PAUSE_BREAK                     &none   &none       &none       &none       &none
-                            &kp K_APP   &kp SPACE       &kp TAB     &none   &none   &trans
+    &kp Q       &kp W       &kp F       &kp P       &kp B                                   &kp J           &kp L       &kp U       &kp Y           &kp SQT
+    &kp A       &kp R       &kp S       &kp T       &kp G                                   &kp M           &kp N       &kp E       &kp I           &kp O
+    &kp Z       &kp X       &kp C       &kp D       &kp V                                   &kp K           &kp H       &kp COMMA   &kp DOT         &kp FSLH
+                &kp TAB     &kp ESC     &kp LCTRL   &kp LSHFT   &mo NAV          &mo NUM    &kp SPACE       &kp LALT    &kp BSPC    &kp ENTER
             >;
         };
-
-        media_layer {
-            bindings = <
-    &none       &none       &none       &none       &none                           &none       &none       &none           &none           &none
-    &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   &none                           &none       &kp C_PREV  &kp C_VOL_UP    &kp C_VOL_DN    &kp C_NEXT
-    &none       &none       &none       &none       &none                           &none       &none       &none           &none           &none
-                                        &trans      &none   &none       &kp C_STOP  &kp C_PP    &kp C_MUTE     
-            >;
-        };
-    };
 };
